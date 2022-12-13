@@ -8,6 +8,7 @@ import javax.persistence.*;
 @Entity
 public class Student {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(unique = true)

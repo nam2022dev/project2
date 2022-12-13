@@ -20,7 +20,7 @@ public class UserRoleController {
 
     @GetMapping("/new")
     public String create() {
-        return "userrole/add.html";
+        return "/userrole/add.html";
     }
 
     @PostMapping("/new")
