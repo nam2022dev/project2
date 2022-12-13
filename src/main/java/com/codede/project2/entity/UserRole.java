@@ -12,7 +12,7 @@ public class UserRole {
     private int id;
 
     @ManyToOne // many user role - to - one user
-//    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id")
     User user;
 
     private String role; // admin, member
