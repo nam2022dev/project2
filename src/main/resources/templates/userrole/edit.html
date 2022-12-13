@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.or">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Add</title>
+</head>
+<body>
+<h1>New user</h1>
+
+<h1>Edit User Role</h1>
+
+<form th:action="@{/user-role/edit}" method="post">
+    <div>
+        <input type="text" name="id" th:value="${userRole.id}">
+    </div>
+    <div>
+        <input type="text" name="userId" th:value="${userRole.userId}" placeholder="Enter user id...">
+    </div>
+    <div>
+        <input type="radio" name="role" value="ROLE_ADMIN" th:checked="${userRole.role == 'ROLE_ADMIN'}" >
+        ROLE_ADMIN
+    </div>
+    <div>
+        <input type="radio" name="role" value="ROLE_STUDENT" th:checked="${userRole.role == 'ROLE_STUDENT'}">
+        ROLE_STUDENT
+    </div>
+    <div>
+        <button type="submit">Update</button>
+    </div>
+</form>
+-----------
+
+</body>
+</html>
