@@ -16,7 +16,7 @@ public class UserRoleRestAPI {
     UserRoleService userRoleService;
 
     @PostMapping("/new")
-//    @ResponseStatus(HttpStatus.CREATED) // muon tra ve trang thai khac thi viet cai nay
+    @ResponseStatus(HttpStatus.CREATED)// // muon tra ve trang thai khac thi viet cai nay
     public void add(@ModelAttribute UserRoleDTO userRoleDTO) {
         userRoleService.create(userRoleDTO);
     } // thanh cong tra ve 200

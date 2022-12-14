@@ -30,17 +30,7 @@ public class UserService {
 
     @Transactional
     public void create(UserDTO userDTO) {
-        User user = new ModelMapper().map(userDTO, User.class);
-
-        //convert dto => entity
-//        user.setName(userDTO.getName());
-//        user.setUsername(userDTO.getUsername());
-//        user.setBirthdate(userDTO.getBirthdate());
-//        user.setPassword(userDTO.getPassword());
-//        user.setAvatar(userDTO.getAvatar());
-//        user.setCreateAt(userDTO.getCreateAt());
-
-        //rollback
+        User user = new ModelMapper().map(userDTO, User.class); // convert user với userdto
         userRepo.save(user);
 
         List<UserRoleDTO> userRoleDTOs = userDTO.getUserRoles();

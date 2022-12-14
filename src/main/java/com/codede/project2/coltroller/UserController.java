@@ -1,7 +1,6 @@
 package com.codede.project2.coltroller;
 
 import com.codede.project2.DTO.UserDTO;
-import com.codede.project2.DTO.UserRoleDTO;
 import com.codede.project2.entity.User;
 import com.codede.project2.repo.UserRepo;
 import com.codede.project2.service.UserService;
@@ -56,13 +55,14 @@ public class UserController {
     }
 
     // /user/download?filename=abc.xyz
+
     @GetMapping("/download")
-    public void download(@RequestParam("filename") String filename,
-                         HttpServletResponse response) throws IOException {
+    public void download(@RequestParam("filename") String filename, HttpServletResponse response) throws IOException {
         final String UPLOAD_FOLDER = "E:/WorkSpace/file/";
 
         File file = new File(UPLOAD_FOLDER + filename);
 
+        // java.nio.file.Files
         Files.copy(file.toPath(), response.getOutputStream());
     }
 
