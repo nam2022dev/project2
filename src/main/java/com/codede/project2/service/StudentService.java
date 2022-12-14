@@ -2,8 +2,12 @@ package com.codede.project2.service;
 
 import com.codede.project2.DTO.PageDTO;
 import com.codede.project2.DTO.StudentDTO;
+import com.codede.project2.DTO.UserRoleDTO;
 import com.codede.project2.entity.Student;
+import com.codede.project2.entity.User;
+import com.codede.project2.entity.UserRole;
 import com.codede.project2.repo.StudentRepo;
+import com.codede.project2.repo.UserRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,32 +25,24 @@ public class StudentService {
 
     @Autowired
     StudentRepo studentRepo;
+    @Autowired
+    UserRepo userRepo;
 
     @Transactional
     public void create(StudentDTO studentDTO) {
-        Student student = new ModelMapper().map(studentDTO, Student.class);
+        Student student = new Student();
+        student.setStudentCode(studentDTO.getStudentCode());
 
         studentRepo.save(student);
-        List<StudentDTO> students = studentDTO.getStudents();
-        for (StudentDTO studentDTOS : students) {
-            if (studentDTOS.getStudents() != null) {
-                //save to db
-                Student student1 = new Student();
-                student1.setId(studentDTO.getId());
-                student1.setStudentCode(studentDTO.getStudentCode());
-
-                studentRepo.save(student1);
-            }
-        }
     }
 
     @Transactional
     public void update(StudentDTO studentDTO) {
-        Student student = studentRepo.findById(studentDTO.getId())
-                .orElseThrow(NoResultException::new);
+        Student student = new Student();
 
-        student.setId(studentDTO.getId());
         student.setStudentCode(studentDTO.getStudentCode());
+        User user = userRepo.findById(studentDTO.getId()).orElseThrow(NoResultException::new);
+        student.setUser(user);
 
         studentRepo.save(student);
     }

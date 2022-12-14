@@ -26,7 +26,7 @@ public class UserRestAPI {
 
     @PostMapping("/new")
     @ResponseBody
-    public void add(@RequestBody UserDTO u) throws IllegalAccessError, IOException {
+    public void add(@ModelAttribute UserDTO u) throws IllegalAccessError, IOException {
         if (u.getFile() != null && u.getFile().isEmpty()) {
             final String UPLOAD_FOLDER = "E:/WorkSpace/file";
 

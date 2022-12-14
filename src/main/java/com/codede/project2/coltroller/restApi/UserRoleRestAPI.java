@@ -4,8 +4,6 @@ import com.codede.project2.DTO.PageDTO;
 import com.codede.project2.DTO.UserRoleDTO;
 import com.codede.project2.service.UserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,7 +14,7 @@ public class UserRoleRestAPI {
     UserRoleService userRoleService;
 
     @PostMapping("/new")
-    @ResponseStatus(HttpStatus.CREATED)// // muon tra ve trang thai khac thi viet cai nay
+//    @ResponseStatus(HttpStatus.CREATED) // muon tra ve trang thai khac thi viet cai nay
     public void add(@ModelAttribute UserRoleDTO userRoleDTO) {
         userRoleService.create(userRoleDTO);
     } // thanh cong tra ve 200
