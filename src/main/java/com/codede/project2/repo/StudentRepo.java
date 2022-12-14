@@ -11,4 +11,7 @@ public interface StudentRepo extends JpaRepository<Student, Integer> {
 
     @Query("select s from Student s where s.studentCode like :x ")
     Page<Student> searchByStudentCode(@Param("x") String c, Pageable pageable);
+
+    @Query("select s from Student s where s.id =  :x ")
+    Page<Student> searchById(@Param("x") int c, Pageable pageable);
 }

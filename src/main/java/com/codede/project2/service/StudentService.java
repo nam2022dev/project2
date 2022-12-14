@@ -65,10 +65,29 @@ public class StudentService {
         return studentDTO;
     }
 
-    public PageDTO<StudentDTO> searchByCode(int studentCode, int page, int size) {
+    public PageDTO<StudentDTO> searchByCode(String studentCode, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
 
         Page<Student> pageRS = studentRepo.searchByStudentCode("%" + studentCode +"%", pageable);
+
+        PageDTO<StudentDTO> pageDTO = new PageDTO<>();
+        pageDTO.setTotalPage(pageRS.getTotalPages());
+        pageDTO.setTotalElements(pageRS.getTotalElements());
+
+        List<StudentDTO> studentDTOS = new ArrayList<>();
+
+        for (Student student : pageRS.getContent()) {
+            studentDTOS.add(new ModelMapper().map(student, StudentDTO.class));
+        }
+
+        pageDTO.setContents(studentDTOS); // set vao pagedto
+        return pageDTO;
+    }
+
+    public PageDTO<StudentDTO> searchById(int id, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<Student> pageRS = studentRepo.searchById(id, pageable);
 
         PageDTO<StudentDTO> pageDTO = new PageDTO<>();
         pageDTO.setTotalPage(pageRS.getTotalPages());
