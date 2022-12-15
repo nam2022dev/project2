@@ -2,12 +2,8 @@ package com.codede.project2.coltroller.restApi;
 
 import com.codede.project2.DTO.PageDTO;
 import com.codede.project2.DTO.StudentDTO;
-import com.codede.project2.DTO.UserRoleDTO;
-import com.codede.project2.repo.StudentRepo;
 import com.codede.project2.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -24,7 +20,7 @@ public class StudentRestApi {
     } // thanh cong tra ve 200
 
     @PostMapping("/edit")
-    public void edit( @ModelAttribute StudentDTO studentDTO) {
+    public void edit(@ModelAttribute StudentDTO studentDTO) {
         studentService.update(studentDTO);
     }
 
@@ -34,7 +30,7 @@ public class StudentRestApi {
     }
 
     @DeleteMapping("/delete")
-     //?id=1 REST API
+    //?id=1 REST API
     public void delete(@RequestParam("id") int id) {
         studentService.delete(id);
     }
@@ -58,7 +54,6 @@ public class StudentRestApi {
         } else {
             pageRS = studentService.searchByCode(studentCode, page, size);
         }
-
 
         return pageRS;
     }

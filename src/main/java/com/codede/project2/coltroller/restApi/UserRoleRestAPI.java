@@ -6,6 +6,7 @@ import com.codede.project2.service.UserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+//webservice restful
 @RestController
 @RequestMapping("/api/user-role")
 public class UserRoleRestAPI {
