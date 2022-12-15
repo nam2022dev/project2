@@ -1,6 +1,7 @@
 package com.codede.project2.coltroller.restApi;
 
 import com.codede.project2.DTO.PageDTO;
+import com.codede.project2.DTO.ResponseDTO;
 import com.codede.project2.DTO.StudentDTO;
 import com.codede.project2.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +16,9 @@ public class StudentRestApi {
 
     @PostMapping("/new")
 //    @ResponseStatus(HttpStatus.CREATED) // muon tra ve trang thai khac thi viet cai nay
-    public void add(@ModelAttribute StudentDTO studentDTO) {
+    public ResponseDTO<StudentDTO> add(@ModelAttribute StudentDTO studentDTO) {
         studentService.create(studentDTO);
+        return ResponseDTO.<StudentDTO>builder().status(200).data(studentDTO).build();
     } // thanh cong tra ve 200
 
     @PostMapping("/edit")

@@ -2,10 +2,8 @@ package com.codede.project2.service;
 
 import com.codede.project2.DTO.PageDTO;
 import com.codede.project2.DTO.StudentDTO;
-import com.codede.project2.DTO.UserRoleDTO;
 import com.codede.project2.entity.Student;
 import com.codede.project2.entity.User;
-import com.codede.project2.entity.UserRole;
 import com.codede.project2.repo.StudentRepo;
 import com.codede.project2.repo.UserRepo;
 import org.modelmapper.ModelMapper;
@@ -32,6 +30,7 @@ public class StudentService {
     public void create(StudentDTO studentDTO) {
         Student student = new Student();
         student.setStudentCode(studentDTO.getStudentCode());
+        student.setId(studentDTO.getId());
 
         studentRepo.save(student);
     }
@@ -49,17 +48,6 @@ public class StudentService {
 
     public StudentDTO getById(int id) {
         Student student = studentRepo.findById(id).orElseThrow(NoResultException::new); //java8 lambda
-//        UserDTO userDTO = new UserDTO();
-//
-//        userDTO.setId(user.getId());
-//        userDTO.setName(user.getName());
-//        userDTO.setUsername(user.getUsername());
-//        userDTO.setBirthdate(user.getBirthdate());
-////        userDTO.setPassword(user.getPassword());
-//        userDTO.setCreateAt(user.getCreateAt());
-//        userDTO.setAvatar(user.getAvatar());
-
-        // co the dung nhu nay
         StudentDTO studentDTO = new ModelMapper().map(student, StudentDTO.class);
 
         return studentDTO;
@@ -68,7 +56,7 @@ public class StudentService {
     public PageDTO<StudentDTO> searchByCode(String studentCode, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
 
-        Page<Student> pageRS = studentRepo.searchByStudentCode("%" + studentCode +"%", pageable);
+        Page<Student> pageRS = studentRepo.searchByStudentCode("%" + studentCode + "%", pageable);
 
         PageDTO<StudentDTO> pageDTO = new PageDTO<>();
         pageDTO.setTotalPage(pageRS.getTotalPages());
