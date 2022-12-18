@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.NoResultException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +40,30 @@ public class GroupService {
     }
 
     @Transactional
-    public void update(Group group) {
+    public void update(GroupDTO groupDTO) {
+        Group group = groupRepo.findById(groupDTO.getId()).orElseThrow(NoResultException::new);
+        group.setName(group.getName());
 
+
+        if (group.getUsers() != null) {
+            group.getUsers().clear();
+
+            for (UserDTO userDTO : groupDTO.getUsers()) {
+                User user = userRepo.findById(userDTO.getId()).orElseThrow(NoResultException::new);
+
+                group.getUsers().add(user);
+            }
+        } else {
+            List<User> users = new ArrayList<>();
+
+            for (UserDTO userDTO : groupDTO.getUsers()) {
+                User user = userRepo.findById(userDTO.getId()).orElseThrow(NoResultException::new);
+
+                users.add(user);
+            }
+            group.setUsers(users);
+        }
+
+        groupRepo.save(group);
     }
 }
