@@ -24,16 +24,16 @@ public class UserDTO {
     private String username;
     private String password;
 
-    @DateTimeFormat(pattern = "dd/MM/yyy")
-    @JsonFormat(pattern = "dd/MM/yyy")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date birthdate;
 
-    @JsonIgnore
+//    @JsonIgnore
     private MultipartFile File;
 
     private Date createdAt;
 
-    @JsonManagedReference
+//    @JsonManagedReference
     private List<UserRoleDTO> userRoles;
 
 }

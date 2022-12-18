@@ -16,5 +16,5 @@ public class UserRoleDTO {
 
 //    @JsonIgnoreProperties("userRoles")
 //    @JsonBackReference
-    private UserDTO user;
+//    private UserDTO user;
 }

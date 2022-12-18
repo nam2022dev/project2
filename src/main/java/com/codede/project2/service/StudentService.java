@@ -4,6 +4,7 @@ import com.codede.project2.DTO.PageDTO;
 import com.codede.project2.DTO.StudentDTO;
 import com.codede.project2.entity.Student;
 import com.codede.project2.entity.User;
+import com.codede.project2.entity.UserRole;
 import com.codede.project2.repo.StudentRepo;
 import com.codede.project2.repo.UserRepo;
 import org.modelmapper.ModelMapper;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.NoResultException;
 import java.util.ArrayList;
@@ -28,21 +30,25 @@ public class StudentService {
 
     @Transactional
     public void create(StudentDTO studentDTO) {
-        Student student = new Student();
-        student.setStudentCode(studentDTO.getStudentCode());
-        student.setId(studentDTO.getId());
+        User user = userRepo.findById(studentDTO.getId()).orElseThrow(NoClassDefFoundError::new);
 
-        studentRepo.save(student);
+        for (UserRole userRole : user.getUserRoles()) {
+            if (userRole.getRole().equals("ROLE_STUDENT")) {
+                Student student = new Student();
+                student.setStudentCode(studentDTO.getStudentCode());
+                student.setId(studentDTO.getId());
+
+                studentRepo.save(student);
+                return; // ket thuc
+            }
+        }
     }
 
     @Transactional
     public void update(StudentDTO studentDTO) {
-        Student student = new Student();
+        Student student = studentRepo.findById(studentDTO.getId()).orElseThrow(NoResultException::new);
 
         student.setStudentCode(studentDTO.getStudentCode());
-        User user = userRepo.findById(studentDTO.getId()).orElseThrow(NoResultException::new);
-        student.setUser(user);
-
         studentRepo.save(student);
     }
 
@@ -53,41 +59,31 @@ public class StudentService {
         return studentDTO;
     }
 
-    public PageDTO<StudentDTO> searchByCode(String studentCode, int page, int size) {
+    public PageDTO<StudentDTO> search(String name, String studentCode, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
 
-        Page<Student> pageRS = studentRepo.searchByStudentCode("%" + studentCode + "%", pageable);
+        Page<Student> pageRS = null;
+
+        if (StringUtils.hasText(name)) {
+            pageRS = studentRepo.searchByName(name, pageable);
+        } else if (StringUtils.hasText(studentCode)) {
+            pageRS = studentRepo.searchByStudentCode(studentCode, pageable);
+        } else if (StringUtils.hasText(studentCode) && StringUtils.hasText(name)) {
+            pageRS = studentRepo.searchByNameAndCode(studentCode, name, pageable);
+        } else {
+            pageRS = studentRepo.findAll(pageable);
+        }
 
         PageDTO<StudentDTO> pageDTO = new PageDTO<>();
         pageDTO.setTotalPage(pageRS.getTotalPages());
         pageDTO.setTotalElements(pageRS.getTotalElements());
 
-        List<StudentDTO> studentDTOS = new ArrayList<>();
-
+        List<StudentDTO> studentDTOs = new ArrayList<>();
         for (Student student : pageRS.getContent()) {
-            studentDTOS.add(new ModelMapper().map(student, StudentDTO.class));
+            studentDTOs.add(new ModelMapper().map(student, StudentDTO.class));
         }
 
-        pageDTO.setContents(studentDTOS); // set vao pagedto
-        return pageDTO;
-    }
-
-    public PageDTO<StudentDTO> searchById(int id, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-
-        Page<Student> pageRS = studentRepo.searchById(id, pageable);
-
-        PageDTO<StudentDTO> pageDTO = new PageDTO<>();
-        pageDTO.setTotalPage(pageRS.getTotalPages());
-        pageDTO.setTotalElements(pageRS.getTotalElements());
-
-        List<StudentDTO> studentDTOS = new ArrayList<>();
-
-        for (Student student : pageRS.getContent()) {
-            studentDTOS.add(new ModelMapper().map(student, StudentDTO.class));
-        }
-
-        pageDTO.setContents(studentDTOS); // set vao pagedto
+        pageDTO.setContents(studentDTOs); // set vao pagedto
         return pageDTO;
     }
 
