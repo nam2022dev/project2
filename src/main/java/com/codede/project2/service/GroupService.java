@@ -1,12 +1,19 @@
 package com.codede.project2.service;
 
 import com.codede.project2.DTO.GroupDTO;
+import com.codede.project2.DTO.PageDTO;
+import com.codede.project2.DTO.StudentDTO;
 import com.codede.project2.DTO.UserDTO;
 import com.codede.project2.entity.Group;
+import com.codede.project2.entity.Student;
 import com.codede.project2.entity.User;
 import com.codede.project2.repo.GroupRepo;
 import com.codede.project2.repo.UserRepo;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -65,5 +72,31 @@ public class GroupService {
         }
 
         groupRepo.save(group);
+    }
+
+    @Transactional
+    public PageDTO<GroupDTO> search(int id, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<Group> pageRS = null;
+
+        pageRS = groupRepo.searchById(id, pageable);
+
+        PageDTO<GroupDTO> pageDTO = new PageDTO<>();
+        pageDTO.setTotalPage(pageRS.getTotalPages());
+        pageDTO.setTotalElements(pageRS.getTotalElements());
+
+        List<GroupDTO> groupDTOs = new ArrayList<>();
+        for (Group group : pageRS.getContent()) {
+            groupDTOs.add(new ModelMapper().map(group, GroupDTO.class));
+        }
+
+        pageDTO.setContents(groupDTOs); // set vao pagedto
+        return pageDTO;
+    }
+
+    public void delete(int id) {
+
+        groupRepo.deleteById(id);
     }
 }

@@ -12,7 +12,7 @@ public class ScoreDTO {
 
     private double score; // diem thi mon hoc/ nguoi
 
-    private Student student;
+    private StudentDTO student;
 
-    private Course course;
+    private CourseDTO course;
 }

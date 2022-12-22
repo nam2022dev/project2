@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface GroupRepo extends JpaRepository<Group, Integer> {
-    @Query("select g from Group g join g.users u where u.name like :x")
-    Page<Group> searchByName(@Param("x") String s, Pageable pageable);
+    @Query("select g from Group g join g.users u where u.id = :x")
+    Page<Group> searchById(@Param("x") int s, Pageable pageable);
 }
