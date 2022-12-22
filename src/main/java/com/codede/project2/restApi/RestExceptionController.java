@@ -1,4 +1,4 @@
-package com.codede.project2.coltroller.restApi;
+package com.codede.project2.restApi;
 
 import com.codede.project2.DTO.ResponseDTO;
 import org.slf4j.Logger;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import javax.persistence.NoResultException;
 import java.sql.SQLException;
 
-@RestControllerAdvice(basePackages = "com.codede.project2.coltroller.restApi")
+@RestControllerAdvice(basePackages = "com.codede.project2.restApi")
 public class RestExceptionController {
 
     Logger logger = LoggerFactory.getLogger(this.getClass());

@@ -1,4 +1,4 @@
-package com.codede.project2.coltroller.restApi;
+package com.codede.project2.restApi;
 
 import com.codede.project2.DTO.PageDTO;
 import com.codede.project2.DTO.ResponseDTO;

@@ -1,9 +1,10 @@
-package com.codede.project2.coltroller.restApi;
+package com.codede.project2.restApi;
 
 import com.codede.project2.DTO.GroupDTO;
 import com.codede.project2.DTO.ResponseDTO;
 import com.codede.project2.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,7 +15,7 @@ public class GroupRestApi {
     GroupService groupService;
 
     @PostMapping("/")
-    public ResponseDTO<GroupDTO> add(@RequestBody GroupDTO groupDTO) {
+    public ResponseDTO<GroupDTO> add(@RequestBody @Validated GroupDTO groupDTO) {
         groupService.create(groupDTO);
         return ResponseDTO.<GroupDTO>builder().status(200).data(groupDTO).build();
     }
