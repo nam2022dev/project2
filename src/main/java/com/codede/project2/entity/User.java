@@ -24,6 +24,8 @@ public class User {
 
     private String avatar; // url
 
+    private String email;
+
     @Column(unique = true)
     private String username;
     private String password;

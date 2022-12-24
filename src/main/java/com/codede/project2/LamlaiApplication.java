@@ -4,6 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -14,6 +17,8 @@ import java.util.Locale;
 
 @SpringBootApplication
 @EnableJpaAuditing
+@EnableScheduling //quart
+@EnableAsync
 public class LamlaiApplication implements WebMvcConfigurer {
 
 	public static void main(String[] args) throws Exception {
@@ -36,7 +41,13 @@ public class LamlaiApplication implements WebMvcConfigurer {
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-
 		registry.addInterceptor(localeChangeInterceptor());
 	}
+
+	// on the second. minute, hour,
+	// day of month, month, day of week
+//	@Scheduled(cron = "*/5 * * * * *") // day la 5s chay 1 lan
+//	public void in() {
+//		System.out.println("Nguyen nam");
+//	}
 }

@@ -1,4 +1,4 @@
-package com.codede.project2.coltroller;
+package com.codede.project2.controller;
 
 import java.util.Scanner;
 

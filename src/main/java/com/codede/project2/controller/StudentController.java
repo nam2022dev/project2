@@ -1,8 +1,7 @@
-package com.codede.project2.coltroller;
+package com.codede.project2.controller;
 
 
 import com.codede.project2.DTO.StudentDTO;
-import com.codede.project2.DTO.UserRoleDTO;
 import com.codede.project2.repo.StudentRepo;
 import com.codede.project2.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;

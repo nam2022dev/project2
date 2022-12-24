@@ -1,10 +1,6 @@
 package com.codede.project2.DTO;
 
-import com.codede.project2.entity.Course;
-import com.codede.project2.entity.Student;
 import lombok.Data;
-
-
 
 @Data
 public class ScoreDTO {
