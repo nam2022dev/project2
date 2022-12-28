@@ -9,6 +9,9 @@ import com.codede.project2.repo.UserRepo;
 import com.codede.project2.repo.UserRoleRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -47,6 +50,7 @@ public class UserService {
     }
 
     @Transactional
+    @CachePut(cacheNames = "users", key = "#userDTO.id")
     public void update(UserDTO userDTO) {
         User user = userRepo.findById(userDTO.getId())
                 .orElseThrow(NoResultException::new);
@@ -59,7 +63,7 @@ public class UserService {
         userRepo.save(user);
     }
 
-
+    @Cacheable(cacheNames = "users", key = "#id", unless = "#result == null ")
     public UserDTO getById(int id) {
         User user = userRepo.findById(id).orElseThrow(NoResultException::new); //java8 lambda
 //        UserDTO userDTO = new UserDTO();
@@ -98,6 +102,7 @@ public class UserService {
     }
 
     @Transactional
+    @CacheEvict(cacheNames = "users", key = "#id")
     public void delete(int id) {
         userRepo.deleteById(id);
     }

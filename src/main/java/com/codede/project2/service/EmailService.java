@@ -24,7 +24,7 @@ public class EmailService {
     @Autowired
     private SpringTemplateEngine templateEngine;
 
-    @Async ///new thread
+    @Async ///chay o luong khac
     public void sendBirthday(String to, String name) {
         try {
             MimeMessage message = javaMailSender.createMimeMessage();

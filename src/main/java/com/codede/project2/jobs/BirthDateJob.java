@@ -39,7 +39,7 @@ public class BirthDateJob {
         for (User user : users) {
             log.info(user.getName());
             //send email , gia su username la email (to)
-            emailService.sendBirthday(user.getEmail(), user.getName());
+//            emailService.sendBirthday(user.getEmail(), user.getName());
 //            emailService.sendTest();
         }
     }

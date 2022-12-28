@@ -9,6 +9,9 @@ import com.codede.project2.repo.StudentRepo;
 import com.codede.project2.repo.UserRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -45,6 +48,9 @@ public class StudentService {
     }
 
     @Transactional
+    @Caching(evict = {@CacheEvict(cacheNames = "students", allEntries = true),
+            @CacheEvict(cacheNames = "users", allEntries = true)
+    })
     public void update(StudentDTO studentDTO) {
         Student student = studentRepo.findById(studentDTO.getId()).orElseThrow(NoResultException::new);
 
@@ -59,6 +65,7 @@ public class StudentService {
         return studentDTO;
     }
 
+    @Cacheable(cacheNames = "students") // key - value
     public PageDTO<StudentDTO> search(String name, String studentCode, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
 

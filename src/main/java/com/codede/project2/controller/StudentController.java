@@ -1,6 +1,8 @@
 package com.codede.project2.controller;
 
 
+import com.codede.project2.DTO.PageDTO;
+import com.codede.project2.DTO.ResponseDTO;
 import com.codede.project2.DTO.StudentDTO;
 import com.codede.project2.repo.StudentRepo;
 import com.codede.project2.service.StudentService;
